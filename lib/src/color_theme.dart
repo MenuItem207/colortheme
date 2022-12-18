@@ -1,5 +1,5 @@
-import 'package:colortheme/src/color_palette_utility.dart';
 import 'package:flutter/material.dart';
+import 'package:colortheme/src/color_palette_utility.dart';
 
 extension StringParsing on Color {
   /// converts a [Color] to a hex
