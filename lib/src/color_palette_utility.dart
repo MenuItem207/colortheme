@@ -6,20 +6,29 @@ class ColorPaletteUtility {
   /// and generates a new palette using a given base color, [newPaletteBaseColor]
   static List<String> generateColorPalette(
     String newPaletteBaseColor,
-    List<String> originalColorPalette,
-  ) {
+    List<String> originalColorPalette, {
+    int baseColourIndex = 0,
+  }) {
     assert(originalColorPalette.length > 1);
-    String originalBaseColor = originalColorPalette[0];
-    List<List<double>> relationships = [];
-    for (int i = 1; i < originalColorPalette.length; i++) {
-      relationships.add(
-        hsvRelationship(originalBaseColor, originalColorPalette[i]),
-      );
+    String originalBaseColor = originalColorPalette[baseColourIndex];
+    List<List<double>?> relationships = [];
+    for (int i = 0; i < originalColorPalette.length; i++) {
+      if (i != baseColourIndex) {
+        relationships.add(
+          hsvRelationship(originalBaseColor, originalColorPalette[i]),
+        );
+      } else {
+        relationships.add(null);
+      }
     }
 
-    List<String> newPalette = [newPaletteBaseColor];
-    for (List<double> relationship in relationships) {
-      newPalette.add(generateDerivedColor(newPaletteBaseColor, relationship));
+    List<String> newPalette = [];
+    for (List<double>? relationship in relationships) {
+      if (relationship == null) {
+        newPalette.add(newPaletteBaseColor);
+      } else {
+        newPalette.add(generateDerivedColor(newPaletteBaseColor, relationship));
+      }
     }
 
     return newPalette;

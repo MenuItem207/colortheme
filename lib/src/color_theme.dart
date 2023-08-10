@@ -16,13 +16,19 @@ extension ColorParsing on String {
 }
 
 class ColorTheme {
+  ColorTheme(
+    this.baseColorPalette, {
+    this.baseColorIndex = 0,
+  });
+
+  /// the index of the base color
+  final int baseColorIndex;
+
   /// the original color palette where index 0 is the base color and _baseColorPalette.length >= 2
   final List<Color> baseColorPalette;
 
   /// the current active color palette where index 0 is the base color and currentColorPalette.length >= 2
   late List<Color> currentColorPalette = baseColorPalette;
-
-  ColorTheme(this.baseColorPalette);
 
   /// updates the colors in [currentColorPalette] based on the existing [baseColorPalette] and the [newBaseColor]
   void updateCurrentColorPalette(Color newBaseColor) {
@@ -34,6 +40,7 @@ class ColorTheme {
     List<String> colorPalette = ColorPaletteUtility.generateColorPalette(
       newBaseColor.parseHex(),
       originalColorPalette,
+      baseColourIndex: baseColorIndex,
     );
 
     for (int i = 0; i < colorPalette.length; i++) {
